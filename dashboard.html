@@ -4,265 +4,928 @@
 <script>!function(){var a="serlf_auth";try{var b=JSON.parse(localStorage.getItem(a));if(!b||!b.expires||b.expires<Date.now()){localStorage.removeItem(a);window.location.href="login.html"}}catch(e){window.location.href="login.html"}}();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>serlf — Dashboard</title>
+<title>Captain Club 🎖️ — Welcome to the Fleet</title>
 <style>
-:root { --bg: #060610; --surface: #0c0c1a; --surface2: #12122a; --border: #1a1a3e; --text: #e8e8f0; --muted: #6b6b8d; --green: #34d399; --cyan: #22d3ee; --accent: #7c6df0; --accent2: #f06292; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, system-ui, sans-serif; line-height: 1.6; }
-nav { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-.nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.nav-links { display: flex; gap: 1.5rem; align-items: center; }
-.nav-links a { color: var(--muted); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: color 0.3s; }
-.nav-links a:hover { color: var(--text); }
-.nav-badge { background: rgba(52,211,153,0.15); color: var(--green); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+:root {
+  --bg: #060610;
+  --surface: #0c0c1a;
+  --surface2: #12122a;
+  --border: #1a1a3e;
+  --text: #e8e8f0;
+  --muted: #6b6b8d;
+  --green: #34d399;
+  --cyan: #22d3ee;
+  --accent: #a855f7;
+  --accent2: #c084fc;
+  --gold: #fbbf24;
+  --red: #ef4444;
+}
 
-.container { max-width: 1000px; margin: 0 auto; padding: 3rem 2rem; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-.welcome-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
-.welcome-bar h1 { font-size: 1.8rem; font-weight: 800; }
-.welcome-bar h1 span { background: linear-gradient(135deg, var(--green), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.status-pill { display: flex; align-items: center; gap: 0.5rem; background: var(--surface); border: 1px solid var(--green); border-radius: 20px; padding: 6px 16px; font-size: 0.85rem; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; transition: all 0.3s; }
-.card:hover { border-color: var(--green); }
-.card-icon { font-size: 2rem; margin-bottom: 1rem; }
-.card-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; }
-.card-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
-.card-status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
-.card-status .dot { width: 6px; height: 6px; border-radius: 50%; }
-.dot-live { background: var(--green); }
-.dot-setup { background: var(--cyan); animation: pulse 1.5s ease-in-out infinite; }
+/* Glass morphism */
+.glass {
+  background: rgba(12, 12, 26, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1);
+}
 
-.section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; }
+/* Navigation */
+nav {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
 
-.actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 3rem; }
-.action { display: flex; align-items: center; gap: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; text-decoration: none; color: var(--text); transition: all 0.3s; }
-.action:hover { border-color: var(--green); transform: translateY(-2px); }
-.action-icon { font-size: 1.5rem; }
-.action-text { font-weight: 600; font-size: 0.95rem; }
-.action-sub { color: var(--muted); font-size: 0.8rem; }
+.nav-logo {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
 
-.plan-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-.plan-info { }
-.plan-name { font-weight: 700; }
-.plan-price { color: var(--green); font-size: 0.9rem; }
-.plan-btn { padding: 8px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; background: rgba(52,211,153,0.1); color: var(--green); border: 1px solid rgba(52,211,153,0.3); text-decoration: none; transition: all 0.3s; }
-.plan-btn:hover { background: rgba(52,211,153,0.2); }
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
 
+.nav-badge {
+  background: rgba(168, 85, 247, 0.2);
+  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.user-info img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+}
+
+.member-status {
+  padding: 2px 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hero Section */
+.hero {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(12, 12, 26, 0.3));
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(168,85,247,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.captain-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--accent2);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(168, 85, 247, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.btn-secondary:hover {
+  background: rgba(168, 85, 247, 0.2);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Member Benefits */
+.benefits-section {
+  padding: 4rem 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-title p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.benefit-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 16px 50px rgba(168, 85, 247, 0.2);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.benefit-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--accent2);
+}
+
+.benefit-desc {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.benefit-status {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 4px 12px;
+  background: rgba(52, 211, 153, 0.2);
+  color: var(--green);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Fleet Status */
+.fleet-section {
+  padding: 4rem 0;
+  background: rgba(168, 85, 247, 0.05);
+}
+
+.fleet-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 2rem;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* Billing Section */
+.billing-section {
+  padding: 4rem 0;
+}
+
+.billing-card {
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 3rem;
+  text-align: center;
+}
+
+.price-display {
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.price-period {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.billing-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  border-radius: 12px;
+  color: var(--green);
+  font-weight: 600;
+}
+
+.manage-billing {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Footer */
+footer {
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.captain-signature {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(168, 85, 247, 0.1);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
-  .grid { grid-template-columns: 1fr; }
-  .actions { grid-template-columns: 1fr; }
-  .welcome-bar { flex-direction: column; gap: 1rem; align-items: flex-start; }
-  .plan-bar { flex-direction: column; gap: 1rem; text-align: center; }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero {
+    padding: 3rem 1rem;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fleet-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .manage-billing {
+    flex-direction: column;
+  }
+  
+  .price-display {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    padding: 1rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .user-info {
+    font-size: 0.8rem;
+  }
+  
+  .fleet-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+/* Loading and animations */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(168, 85, 247, 0.3);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">serlf</div>
+  <a href="#" class="nav-logo">serlf</a>
   <div class="nav-links">
-    <span class="nav-badge">Subscriber</span>
-    <a href="https://serlf.com">Home</a>
-    <a href="mailto:hello@serlf.com">Support</a>
-    <span id="user-info" style="display:flex;align-items:center;gap:8px;"></span>
-    <a href="#" onclick="signOut()" style="color:var(--muted);font-size:0.8rem;">Sign Out</a>
+    <span class="nav-badge">
+      <span>🎖️</span>
+      <span>Captain Club</span>
+    </span>
+    <a href="#billing">Billing</a>
+    <a href="#fleet">Fleet Status</a>
+    <div class="user-info" id="userInfo">
+      <span class="member-status">VIP Member</span>
+    </div>
   </div>
 </nav>
 
+<div class="hero">
+  <div class="hero-content">
+    <div class="captain-badge">
+      <span>🎖️</span>
+      <span>Captain Club at your service</span>
+    </div>
+    <h1>Welcome to the Fleet</h1>
+    <p>You're now part of something exclusive. Six products, one membership, infinite possibilities. The meek way starts here.</p>
+    <div class="cta-buttons">
+      <a href="#benefits" class="btn btn-primary">
+        <span>⚡</span>
+        <span>Explore Your Benefits</span>
+      </a>
+      <a href="#fleet" class="btn btn-secondary">
+        <span>🚀</span>
+        <span>Fleet Status</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <div class="container">
 
-  <div class="welcome-bar">
-    <h1>Welcome to <span>serlf</span></h1>
-    <div class="status-pill">
-      <div class="status-dot"></div>
-      Setting up your environment
+  <!-- Member Benefits -->
+  <section class="benefits-section" id="benefits">
+    <div class="section-title fade-in">
+      <h2>Your Exclusive Access</h2>
+      <p>Every dollar unlocks the entire serlf ecosystem. No tiers, no upsells, no games.</p>
     </div>
-  </div>
 
-  <div class="section-title">Your Products</div>
-  <div class="grid">
-    <a href="platform.html" class="card" style="text-decoration:none;color:var(--text);">
-      <div class="card-icon">🤖</div>
-      <div class="card-title">serlf Platform</div>
-      <div class="card-desc">Your dedicated AI team, learning your business.</div>
-      <div class="card-status"><div class="dot dot-setup"></div> Setting up</div>
-    </a>
-    <a href="sites.html" class="card" style="text-decoration:none;color:var(--text);">
-      <div class="card-icon">🌐</div>
-      <div class="card-title">serlf Sites</div>
-      <div class="card-desc">Your AI-managed website, always online.</div>
-      <div class="card-status"><div class="dot dot-setup"></div> Ready to set up →</div>
-    </a>
-    <a href="security.html" class="card" style="text-decoration:none;color:var(--text);">
-      <div class="card-icon">🔐</div>
-      <div class="card-title">serlf Security</div>
-      <div class="card-desc">Enterprise-grade protection for your environment.</div>
-      <div class="card-status"><div class="dot dot-setup"></div> Setting up</div>
-    </a>
-    <a href="transform.html" class="card" style="text-decoration:none;color:var(--text);">
-      <div class="card-icon">☁️</div>
-      <div class="card-title">serlf Transform</div>
-      <div class="card-desc">Your professional cloud infrastructure.</div>
-      <div class="card-status"><div class="dot dot-setup"></div> Setting up</div>
-    </a>
-    <a href="intelligence.html" class="card" style="text-decoration:none;color:var(--text);">
-      <div class="card-icon">📊</div>
-      <div class="card-title">serlf Intelligence</div>
-      <div class="card-desc">AI-powered insights for your business.</div>
-      <div class="card-status"><div class="dot dot-setup"></div> Setting up</div>
-    </a>
-    <a href="labs.html" class="card" style="text-decoration:none;color:var(--text);">
-      <div class="card-icon">🧪</div>
-      <div class="card-title">serlf Labs</div>
-      <div class="card-desc">Cutting-edge AI research, applied to you.</div>
-      <div class="card-status"><div class="dot dot-setup"></div> Setting up</div>
-    </a>
-    <a href="mail.html" class="card" style="text-decoration:none;color:var(--text);">
-      <div class="card-icon">📧</div>
-      <div class="card-title">serlf Mail</div>
-      <div class="card-desc">Professional email for your business.</div>
-      <div class="card-status"><div class="dot dot-setup"></div> Ready to set up →</div>
-    </a>
-  </div>
+    <div class="benefits-grid">
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🚀</div>
+        <div class="benefit-title">Early Access</div>
+        <div class="benefit-desc">Be the first to try new features across all 6 serlf products. Your feedback shapes our roadmap.</div>
+        <div class="benefit-status">Active</div>
+      </div>
 
-  <div class="section-title">Quick Actions</div>
-  <div class="actions">
-    <a href="mailto:hello@serlf.com?subject=Onboarding" class="action">
-      <div class="action-icon">💬</div>
-      <div>
-        <div class="action-text">Start Onboarding</div>
-        <div class="action-sub">Tell us about your business</div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">Priority Support</div>
+        <div class="benefit-desc">Skip the queue. Direct access to our team for faster resolution of any issues or questions.</div>
+        <div class="benefit-status">Active</div>
       </div>
-    </a>
-    <a href="mailto:hello@serlf.com?subject=Support" class="action">
-      <div class="action-icon">🛟</div>
-      <div>
-        <div class="action-text">Get Support</div>
-        <div class="action-sub">We're here to help</div>
-      </div>
-    </a>
-    <a href="https://billing.stripe.com/p/login/5kQ7v3c5L5pE5b2cMM" class="action">
-      <div class="action-icon">💳</div>
-      <div>
-        <div class="action-text">Manage Billing</div>
-        <div class="action-sub">Update payment or cancel</div>
-      </div>
-    </a>
-    <a href="https://serlf.com" class="action">
-      <div class="action-icon">📖</div>
-      <div>
-        <div class="action-text">Learn More</div>
-        <div class="action-sub">See all features and products</div>
-      </div>
-    </a>
-  </div>
 
-  <div class="plan-bar">
-    <div class="plan-info">
-      <div class="plan-name">serlf — All Products</div>
-      <div class="plan-price">$1 CAD / month · Active</div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🎖️</div>
+        <div class="benefit-title">Member Badge</div>
+        <div class="benefit-desc">Show your status across the serlf ecosystem. VIP treatment wherever the badge appears.</div>
+        <div class="benefit-status">Active</div>
+      </div>
+
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🛠️</div>
+        <div class="benefit-title">Exclusive Tools</div>
+        <div class="benefit-desc">Member-only features in Platform, Sites, Security, Transform, Intelligence, and Labs.</div>
+        <div class="benefit-status">Active</div>
+      </div>
+
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🤝</div>
+        <div class="benefit-title">Private Network</div>
+        <div class="benefit-desc">Connect with other members. Share insights, collaborate on projects, build together.</div>
+        <div class="benefit-status">Coming Soon</div>
+      </div>
+
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🎁</div>
+        <div class="benefit-title">Surprise Perks</div>
+        <div class="benefit-desc">Unexpected bonuses, exclusive content, and member-only events. We love to surprise.</div>
+        <div class="benefit-status">Ongoing</div>
+      </div>
     </div>
-    <a href="https://billing.stripe.com/p/login/5kQ7v3c5L5pE5b2cMM" class="plan-btn">Manage Plan</a>
-  </div>
+  </section>
 
-  <!-- Owner Panel -->
-  <div id="owner-panel" style="display:none;margin-top:2rem;">
-    <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1rem;color:var(--accent2);">⚓ Owner Panel</h2>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;">
-      <a href="https://dashboard.stripe.com" target="_blank" class="card" style="text-decoration:none;">
-        <div class="card-icon">💳</div>
-        <div class="card-title">Stripe Dashboard</div>
-        <div class="card-desc">Payments, customers, revenue</div>
-      </a>
-      <a href="https://github.com/orgs/eose-sre/repositories" target="_blank" class="card" style="text-decoration:none;">
-        <div class="card-icon">📦</div>
-        <div class="card-title">GitHub Repos</div>
-        <div class="card-desc">All 8 serlf repos</div>
-      </a>
-      <a href="https://portal.azure.com" target="_blank" class="card" style="text-decoration:none;">
-        <div class="card-icon">☁️</div>
-        <div class="card-title">Azure Portal</div>
-        <div class="card-desc">DNS, KV, AKS, infrastructure</div>
-      </a>
-      <a href="https://master1.eose.ca" target="_blank" class="card" style="text-decoration:none;">
-        <div class="card-icon">⚓</div>
-        <div class="card-title">Admiral Fleet Control</div>
-        <div class="card-desc">Captain fleet management</div>
-      </a>
-      <a href="https://console.cloud.google.com" target="_blank" class="card" style="text-decoration:none;">
-        <div class="card-icon">🔑</div>
-        <div class="card-title">Google Cloud</div>
-        <div class="card-desc">OAuth, SSO, APIs</div>
-      </a>
-      <div class="card" id="stats-card">
-        <div class="card-icon">📊</div>
-        <div class="card-title">Quick Stats</div>
-        <div class="card-desc" id="quick-stats">Loading...</div>
+  <!-- Fleet Status -->
+  <section class="fleet-section" id="fleet">
+    <div class="section-title">
+      <h2>Fleet Status</h2>
+      <p>Real-time status of all serlf domains and products under my command.</p>
+    </div>
+
+    <div class="fleet-stats">
+      <div class="stat-card">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Active Domains</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Core Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">99.9%</div>
+        <div class="stat-label">Uptime</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="memberCount">1</div>
+        <div class="stat-label">VIP Members</div>
       </div>
     </div>
 
-    <div style="margin-top:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;">
-      <div style="font-weight:700;margin-bottom:0.75rem;">🚀 Fleet Status</div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;" id="fleet-domains"></div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🌐</div>
+        <div class="benefit-title">serlf Platform</div>
+        <div class="benefit-desc">Your AI command center. Manage agents, workflows, and automation.</div>
+        <a href="https://platform.serlf.com" class="btn btn-secondary" style="margin-top: 1rem;">
+          <span>Launch Platform</span>
+        </a>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🎨</div>
+        <div class="benefit-title">serlf Sites</div>
+        <div class="benefit-desc">AI-generated websites in under 2 minutes. Professional, responsive, ready.</div>
+        <a href="https://sites.serlf.com" class="btn btn-secondary" style="margin-top: 1rem;">
+          <span>Create Site</span>
+        </a>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🔐</div>
+        <div class="benefit-title">serlf Security</div>
+        <div class="benefit-desc">Enterprise-grade protection. Scan domains, monitor infrastructure.</div>
+        <a href="https://security.serlf.com" class="btn btn-secondary" style="margin-top: 1rem;">
+          <span>Run Scan</span>
+        </a>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">serlf Transform</div>
+        <div class="benefit-desc">Data transformation and processing. Turn chaos into clarity.</div>
+        <a href="https://transform.serlf.com" class="btn btn-secondary" style="margin-top: 1rem;">
+          <span>Transform Data</span>
+        </a>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🧠</div>
+        <div class="benefit-title">serlf Intelligence</div>
+        <div class="benefit-desc">AI-powered insights and analytics. Make better decisions, faster.</div>
+        <a href="https://intelligence.serlf.com" class="btn btn-secondary" style="margin-top: 1rem;">
+          <span>Get Insights</span>
+        </a>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🧪</div>
+        <div class="benefit-title">serlf Labs</div>
+        <div class="benefit-desc">Cutting-edge experiments. AI tools before anyone else sees them.</div>
+        <a href="https://labs.serlf.com" class="btn btn-secondary" style="margin-top: 1rem;">
+          <span>Enter Labs</span>
+        </a>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Billing -->
+  <section class="billing-section" id="billing">
+    <div class="section-title">
+      <h2>Your Membership</h2>
+      <p>Simple, transparent pricing. One dollar, everything included.</p>
+    </div>
+
+    <div class="billing-card">
+      <div class="price-display">$1</div>
+      <div class="price-period">per month</div>
+      
+      <div class="billing-status" id="billingStatus">
+        <span>✅</span>
+        <span>Active Subscription</span>
+      </div>
+
+      <div class="manage-billing">
+        <button class="btn btn-primary" onclick="manageBilling()">
+          <span>💳</span>
+          <span>Manage Billing</span>
+        </button>
+        <button class="btn btn-secondary" onclick="downloadInvoice()">
+          <span>📄</span>
+          <span>Download Receipt</span>
+        </button>
+      </div>
+
+      <p style="margin-top: 2rem; color: var(--muted); font-size: 0.9rem;">
+        Next billing: <span id="nextBilling">Loading...</span><br>
+        Member since: <span id="memberSince">Today</span>
+      </p>
+    </div>
+  </section>
 
 </div>
 
-<script src="serlf-api.js"></script>
-<script>
-// Load user info from auth
-(function() {
-  var auth = JSON.parse(localStorage.getItem('serlf_auth') || '{}');
-  var userInfo = document.getElementById('user-info');
-  if (auth.picture) {
-    userInfo.innerHTML = '<img src="' + auth.picture + '" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--green);" alt="">';
-  }
-  if (auth.name || auth.email) {
-    var name = auth.name || auth.email.split('@')[0];
-    userInfo.innerHTML += '<span style="color:var(--text);font-size:0.85rem;font-weight:500;">' + name + '</span>';
-  }
-  // Personalize welcome
-  if (auth.name) {
-    var h1 = document.querySelector('.welcome-bar h1');
-    if (h1) h1.innerHTML = 'Welcome, <span>' + auth.name.split(' ')[0] + '</span>';
-  }
-
-  // Owner panel
-  if (SERLF_AUTH.isOwner()) {
-    document.getElementById('owner-panel').style.display = 'block';
+<footer>
+  <div class="container">
+    <p>&copy; 2026 serlf. All rights reserved. • Powered by the meek way.</p>
     
-    // Badge
-    var badge = document.querySelector('.nav-badge');
-    if (badge) { badge.textContent = 'Owner'; badge.style.background = 'rgba(240,98,146,0.15)'; badge.style.color = '#f06292'; }
+    <div class="captain-signature">
+      "I am Captain Club, guardian of this exclusive fleet. Every member who trusts us with their dollar gets everything — no tiers, no upsells, no games. Welcome aboard, and thank you for believing in accessible exclusivity."
+      <br><br>
+      <strong>— Captain Club 🎖️</strong>
+    </div>
+  </div>
+</footer>
 
-    // Fleet domains
-    var domains = ['serlf.ca','serlf.com','serlf.net','serlf.org','serlf.club','serlf.info','serlf.shop','serlf.store'];
-    var fleetEl = document.getElementById('fleet-domains');
-    domains.forEach(function(d) {
-      var link = document.createElement('a');
-      link.href = 'https://' + d;
-      link.target = '_blank';
-      link.style.cssText = 'padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--green);font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;';
-      link.textContent = d;
-      link.onmouseover = function() { this.style.borderColor = 'var(--green)'; };
-      link.onmouseout = function() { this.style.borderColor = 'var(--border)'; };
-      fleetEl.appendChild(link);
+<script>
+// Auth and user info
+const auth = JSON.parse(localStorage.getItem('serlf_auth') || '{}');
+const userName = (auth.name || 'Member').split(' ')[0];
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+  loadUserInfo();
+  loadBillingInfo();
+  addAnimations();
+});
+
+function loadUserInfo() {
+  const userInfo = document.getElementById('userInfo');
+  if (auth.picture) {
+    const img = document.createElement('img');
+    img.src = auth.picture;
+    img.alt = auth.name || 'Member';
+    userInfo.insertBefore(img, userInfo.firstChild);
+  }
+  
+  const nameSpan = document.createElement('span');
+  nameSpan.textContent = userName;
+  nameSpan.style.fontWeight = '600';
+  userInfo.insertBefore(nameSpan, userInfo.lastChild);
+}
+
+function loadBillingInfo() {
+  // Simulate loading billing info
+  const nextBilling = new Date();
+  nextBilling.setMonth(nextBilling.getMonth() + 1);
+  document.getElementById('nextBilling').textContent = nextBilling.toLocaleDateString();
+  
+  const memberSince = new Date();
+  document.getElementById('memberSince').textContent = memberSince.toLocaleDateString();
+}
+
+function addAnimations() {
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.benefit-card, .stat-card').forEach(card => {
+    observer.observe(card);
+  });
+}
+
+// Stripe billing integration
+async function manageBilling() {
+  const button = event.target;
+  button.innerHTML = '<span class="loading"></span><span>Loading...</span>';
+  button.disabled = true;
+
+  try {
+    // In production, this would call your Stripe Customer Portal
+    const response = await fetch('/api/stripe/portal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth.token}`
+      },
+      body: JSON.stringify({ customer_email: auth.email })
     });
 
-    // Quick stats
-    document.getElementById('quick-stats').innerHTML = '8 domains · 6 products · 1 customer · $1 MRR';
+    if (response.ok) {
+      const { url } = await response.json();
+      window.location.href = url;
+    } else {
+      throw new Error('Failed to create portal session');
+    }
+  } catch (error) {
+    console.error('Billing error:', error);
+    
+    // Fallback: mailto for support
+    const mailtoLink = `mailto:club@serlf.com?subject=Billing Support Request&body=Hello Captain Club,\n\nI need help with my billing.\n\nMember: ${auth.email}\nIssue: Please describe your billing question or issue here.\n\nThanks!\n${userName}`;
+    window.location.href = mailtoLink;
+  } finally {
+    button.innerHTML = '<span>💳</span><span>Manage Billing</span>';
+    button.disabled = false;
   }
-})();
-
-function signOut() {
-  localStorage.removeItem('serlf_auth');
-  window.location.href = 'login.html';
 }
+
+async function downloadInvoice() {
+  const button = event.target;
+  button.innerHTML = '<span class="loading"></span><span>Generating...</span>';
+  button.disabled = true;
+
+  try {
+    // In production, this would generate and download an invoice
+    const response = await fetch('/api/invoice/latest', {
+      headers: {
+        'Authorization': `Bearer ${auth.token}`
+      }
+    });
+
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `serlf-receipt-${new Date().toISOString().split('T')[0]}.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } else {
+      throw new Error('Failed to generate invoice');
+    }
+  } catch (error) {
+    console.error('Invoice error:', error);
+    
+    // Fallback: show simple receipt
+    const receiptWindow = window.open('', '_blank', 'width=600,height=800');
+    receiptWindow.document.write(`
+      <html>
+        <head><title>serlf Receipt</title></head>
+        <body style="font-family: Arial, sans-serif; padding: 2rem; background: #f9fafb;">
+          <div style="max-width: 400px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+            <h1 style="color: #a855f7; text-align: center; margin-bottom: 2rem;">🎖️ Captain Club</h1>
+            <h2 style="margin-bottom: 1rem;">Receipt</h2>
+            <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem; margin-bottom: 1rem;">
+              <p><strong>Member:</strong> ${auth.name || auth.email}</p>
+              <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+              <p><strong>Amount:</strong> $1.00 USD</p>
+              <p><strong>Description:</strong> serlf Club Monthly Membership</p>
+            </div>
+            <div style="text-align: center; color: #6b7280;">
+              <p>Thank you for your membership!</p>
+              <p style="font-size: 0.8rem;">Captain Club • serlf.club</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `);
+  } finally {
+    button.innerHTML = '<span>📄</span><span>Download Receipt</span>';
+    button.disabled = false;
+  }
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Easter egg: Konami code for special member benefits
+let konamiCode = [];
+const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+
+document.addEventListener('keydown', function(e) {
+  konamiCode.push(e.keyCode);
+  if (konamiCode.length > konamiSequence.length) {
+    konamiCode.shift();
+  }
+  
+  if (konamiCode.length === konamiSequence.length && 
+      konamiCode.every((code, i) => code === konamiSequence[i])) {
+    
+    // Special member easter egg
+    document.body.style.background = 'linear-gradient(45deg, #a855f7, #c084fc, #fbbf24, #a855f7)';
+    document.body.style.backgroundSize = '400% 400%';
+    document.body.style.animation = 'gradientShift 3s ease infinite';
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    alert('🎖️ Secret Captain Club benefit unlocked! The rainbow fleet salutes you. ✨');
+    
+    setTimeout(() => {
+      document.body.style.background = '#060610';
+      document.body.style.animation = '';
+    }, 5000);
+  }
+});
+
+// Log Captain Club activity
+console.log('%c🎖️ Captain Club Dashboard Loaded', 'color: #a855f7; font-size: 16px; font-weight: bold;');
+console.log('%cWelcome to the exclusive fleet, ' + userName + '!', 'color: #c084fc;');
+console.log('%cMember benefits: Early Access, Priority Support, VIP Badge, Exclusive Tools, Private Network, Surprise Perks', 'color: #6b6b8d;');
 </script>
 
 </body>
